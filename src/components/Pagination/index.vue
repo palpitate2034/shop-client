@@ -8,7 +8,12 @@
         <button disabled v-if="startEnd.start>2">···</button>
 
         <!-- 连续页码 -->
-        <button v-for="item in startEnd.end" v-if="item>=startEnd.start" :key="item" @click="changeCurrentPage(item)"
+        <!-- 多执行了从1到start-1的遍历和v-if的判断 -->
+        <!-- <button v-for="item in startEnd.end" v-if="item>=startEnd.start" :key="item" @click="changeCurrentPage(item)"
+            :class="{active: mcPage===item}">
+            {{item}}
+        </button> -->
+        <button v-for="item in startEndArr" :key="item" @click="changeCurrentPage(item)"
             :class="{active: mcPage===item}">
             {{item}}
         </button>
@@ -42,7 +47,11 @@ export default {
         },
         showPageNo: { // 连续页码数
             type: Number,
-            default: 5
+            default: 5,
+            // 要求传入的值是奇数
+            validator: function (value) {
+                return value % 2 === 1
+            }
         }
     },
 
@@ -65,6 +74,20 @@ export default {
             const { total, pageSize } = this
             // 返回计算后的结果
             return Math.ceil(total / pageSize)
+        },
+
+
+        /* 
+        包含从start到end的数组
+        */
+        startEndArr() {
+            const arr = []
+            const { start, end } = this.startEnd
+            for (let page = start; page <= end; page++) {
+                arr.push(page)
+
+            }
+            return arr
         },
 
         /* 
