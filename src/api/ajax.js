@@ -13,7 +13,7 @@ import "nprogress/nprogress.css"
 
 // 配置通用的基础路径和超时
 const service = axios.create({
-    baseURL: '/api',  // 基础路径
+    baseURL: 'http://gmall-h5-api.atguigu.cn/api',  // 基础路径
     timeout: 20000   // 超时时间
 })
 
