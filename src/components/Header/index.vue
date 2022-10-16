@@ -51,15 +51,26 @@ export default {
 
             const location = {
                 name: "search",
+                query: this.$route.query     // 将当前就有的query参数携带上
             }
             // 只有有数据时才携带params参数
             if (this.keyword) {
-                location.params = { keyword: this.keyword }
-                location.query = {
-                    keyword2: this.keyword.toUpperCase()
+                location.params = {
+                    keyword: this.keyword
                 }
+                /* location.query = {
+                    keyword2: this.keyword.toUpperCase()
+                } */
             }
-            this.$router.push(location)
+            /* 
+                从其他页到搜索页用push
+                从search到search用replace
+                */
+            if (this.$route.name === "search") {
+                this.$router.replace(location)
+            } else {
+                this.$router.push(location)
+            }
             // 解决重复跳转路由的错误：
             // 方法1 传入成功的回调函数参数
             // this.$router.push(location, () => { })
@@ -72,6 +83,14 @@ export default {
             keyword: ''
         }
     },
+    mounted() {
+        this.$bus.$on('removeKeyword', () => {
+            this.keyword = ''
+        })
+    },
+    beforeDestroy() {
+        this.$bus.off('removeKeyword')
+    }
 }
 </script>
 
