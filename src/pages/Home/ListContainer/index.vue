@@ -5,10 +5,10 @@
                 <div class="center">
                     <!--banner轮播-->
                     <swiper :options="swiperOptions">
-                        <!-- <swiper-slide class="swiper-slide" v-for="banner in bannerList" :key="banner.id">
+                        <swiper-slide class="swiper-slide" v-for="banner in bannerList" :key="banner.id">
                             <img :src="banner.imageUrl" />
-                        </swiper-slide> -->
-                        <swiper-slide class="swiper-slide">
+                        </swiper-slide>
+                        <!-- <swiper-slide class="swiper-slide">
                             <img src="./images/banner1.jpg" />
                         </swiper-slide>
                         <swiper-slide class="swiper-slide">
@@ -19,7 +19,7 @@
                         </swiper-slide>
                         <swiper-slide class="swiper-slide">
                             <img src="./images/banner4.jpg" />
-                        </swiper-slide>
+                        </swiper-slide> -->
                         <div class="swiper-pagination" slot="pagination"></div>
                         <div class="swiper-button-prev" slot="button-prev"></div>
                         <div class="swiper-button-next" slot="button-next"></div>

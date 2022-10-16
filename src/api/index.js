@@ -18,7 +18,7 @@ export function reqCategoryList() {
 }
 
 // 首页广告轮播
-export const reqBannerList = () => ajax("/cms/banner")
+export const reqBannerList = () => mockAjax("/banners")
 
 // mock接口
 export const reqRecommends = () => mockAjax("/recommends")
