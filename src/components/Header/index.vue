@@ -13,7 +13,8 @@
                 </div>
                 <div class="typeList">
                     <a href="###">我的订单</a>
-                    <a href="###">我的购物车</a>
+                    <!-- <a href="###">我的购物车</a> -->
+                    <router-link to="/shopcart">我的购物车</router-link>
                     <a href="###">我的尚品汇</a>
                     <a href="###">尚品汇会员</a>
                     <a href="###">企业采购</a>
@@ -50,17 +51,17 @@ export default {
 
 
             const location = {
-                name: "search",
-                query: this.$route.query     // 将当前就有的query参数携带上
+                name: 'search',
+                query: this.$route.query // 将当前就有的query参数携带上
             }
-            // 只有有数据时才携带params参数
+            // 只有数据时, 才携带params参数
             if (this.keyword) {
-                location.params = {
+                location.params = { // 路由必须配置name
                     keyword: this.keyword
                 }
-                /* location.query = {
-                    keyword2: this.keyword.toUpperCase()
-                } */
+                // location.query = {
+                //   keyword2: this.keyword.toUpperCase()
+                // }
             }
             /* 
                 从其他页到搜索页用push

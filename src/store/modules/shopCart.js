@@ -1,11 +1,13 @@
-import { reqAddOrUpdateCart } from "@/api";
+import { reqAddOrUpdateCart, reqCartList, reqUpdateCartChecked, reqDeleteCart } from "@/api";
 
 const state = {
-
+    shopCartList: []
 }
 
 const mutations = {
-
+    RECEIVESHOPLIST(state, shopCartList) {
+        state.shopCartList = shopCartList
+    }
 }
 
 const actions = {
@@ -24,6 +26,48 @@ const actions = {
         } else {
             return Promise.reject(new Error('failed'))
         }
+    },
+    async getCartList({ commit }) {
+        const result = await reqCartList()
+        if (result.code === 200) {
+            commit('RECEIVESHOPLIST', result.data[0].cartInfoList)
+        }
+    },
+    async updateCartChecked({ commit }, { skuId, isChecked }) {
+        const result = await reqUpdateCartChecked(skuId, isChecked)
+
+        if (result.code === 200) {
+            return 'ok'
+        } else {
+            return Promise.reject(new Error('failed'))
+        }
+    },
+    async updateCartCheckedAll({ commit, dispatch, state }, isChecked) {
+        let promises = []
+        state.shopCartList.forEach(item => {
+            if (item.isChecked === isChecked) return
+            let promise = dispatch('updateCartChecked', { skuId: item.skuId, isChecked: isChecked })
+            promises.push(promise)
+        })
+
+        return Promise.all(promises)
+    },
+    async deleteCart({ commit }, skuId) {
+        const result = await reqDeleteCart(skuId)
+        if (result.code === 200) {
+            return 'ok'
+        } else {
+            return Promise.reject(new Error('failed'))
+        }
+    },
+    async deleteCartAll({ commit, dispatch, state }) {
+        let promises = []
+        state.shopCartList.forEach(item => {
+            if (!item.isChecked) return
+            let promise = dispatch('deleteCart', item.skuId)
+            promises.push(promise)
+            return Promise.all(promises)
+        });
     }
 }
 

@@ -10,6 +10,8 @@ import axios from 'axios';
 import nprogress from 'nprogress';
 import "nprogress/nprogress.css"
 
+import store from '@/store';
+
 
 // 配置通用的基础路径和超时
 const service = axios.create({
@@ -22,6 +24,11 @@ const service = axios.create({
 service.interceptors.request.use((config) => {
     // 显示请求进度条 在请求拦截器里做
     nprogress.start()
+
+    let userTempId = store.state.user.userTempId
+    if (userTempId) {
+        config.headers.userTempId = userTempId
+    }
 
     return config
 })
