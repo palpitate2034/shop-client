@@ -32,3 +32,21 @@ export const reqFloors = () => mockAjax("/floors")
 // 搜索分页列表
 // api/list     POST
 export const reqSearch = (searchParams) => ajax.post('/list', searchParams)
+
+// 详情页
+// api/item/{ skuId }     GET
+export const reqDetailInfo = (skuId) => {
+    return ajax({
+        url: `/item/${skuId}`,
+        method: "get"
+    })
+}
+
+// 添加购物车(修改购物车的商品数量)
+// /api/cart/addToCart/{ skuId }/{ skuNum }
+export const reqAddOrUpdateCart = (skuId, skuNum) => {
+    return ajax({
+        url: `/cart/addToCart/${skuId}/${skuNum}`,
+        method: "post"
+    })
+}

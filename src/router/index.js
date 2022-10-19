@@ -14,7 +14,7 @@ const originalPush = VueRouter.prototype.push
 const originalReplace = VueRouter.prototype.replace
 // 指定新的push方法
 VueRouter.prototype.push = function push(location, onResolve, onReject) {
-    console.log('push', onResolve, onReject);
+    // console.log('push', onResolve, onReject);
     // 如果指定了成功或者失败的回调
     if (onResolve || onReject) {
         // 直接调用原本的push方法
@@ -53,7 +53,11 @@ VueRouter.prototype.replace = function replace(location, onResolve, onReject) {
 // 向外暴露
 export default new VueRouter({
     // 模式
-    mode: 'history',  // 不带#
+    mode: 'hash',  // history有问题
     // 应用中的所有路由
-    routes
+    routes,
+    // 切换新路由,页面滚动到最上方
+    scrollBehavior(to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 })

@@ -2,41 +2,45 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
-import home from './modules/home';
-import user from './modules/user';
-import search from './modules/search';
+import modules from './modules';
+// import home from './modules/home';
+// import user from './modules/user';
+// import search from './modules/search';
+// import detail from './modules/detail';
 
 
 Vue.use(Vuex)
 
 
-const mutations = {
-    xxx(state) {    // state是总的状态
+// const mutations = {
+//     xxx(state) {    // state是总的状态
 
-    },
-    aaa(state) {
+//     },
+//     aaa(state) {
 
-    }
-}
+//     }
+// }
 
-const actions = {
-    yyy({ commit }) {
+// const actions = {
+//     yyy({ commit }) {
 
-    }
-}
+//     }
+// }
 
-const getters = {
-}
+// const getters = {
+// }
 
 export default new Vuex.Store({
-    mutations,
-    actions,
-    getters,
-    modules: {
-        home,
-        user,
-        search
-    }
+    // mutations,
+    // actions,
+    // getters,
+    modules
+    // modules: {
+    //     home,
+    //     user,
+    //     search,
+    //     detail
+    // }
 })
 
 
