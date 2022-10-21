@@ -32,6 +32,7 @@ export default {
     mounted() {
         this.$store.dispatch('getRecommends')
         this.$store.dispatch('getFloors')
+
     },
 
     computed: {
@@ -39,7 +40,7 @@ export default {
             floors: state => state.home.floors
         })
     },
-    components: { ListContainer, TodayRecommend, Rank, Like, Floor, Brand }
+    components: { ListContainer, TodayRecommend, Rank, Like, Floor, Brand },
 }
 </script>
 

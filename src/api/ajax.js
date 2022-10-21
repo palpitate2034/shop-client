@@ -30,6 +30,11 @@ service.interceptors.request.use((config) => {
         config.headers.userTempId = userTempId
     }
 
+    // 需要携带token
+    if (store.state.user.token) {
+        config.headers.token = store.state.user.token
+    }
+
     return config
 })
 

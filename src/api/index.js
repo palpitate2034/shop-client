@@ -1,6 +1,7 @@
 // 包含应用的所有接口的接口请求函数
 // 函数内部调用ajax函数发送请求
 // 函数返回的是Promise对象
+import { method } from 'lodash';
 import ajax from './ajax';
 
 import mockAjax from './mockAjax';
@@ -75,5 +76,69 @@ export const reqDeleteCart = (skuId) => {
     return ajax({
         url: `/cart/deleteCart/${skuId}`,
         method: 'delete'
+    })
+}
+
+// 注册
+// /user/passport/register
+// POST
+export const reqUserRegister = (userInfo) => {
+    return ajax({
+        url: '/user/passport/register',
+        method: 'post',
+        data: userInfo
+    })
+}
+
+// 获取验证码
+export const reqGetCode = (phone) => {
+    return ajax({
+        url: `/user/passport/sendCode/${phone}`,
+        method: 'get'
+    })
+}
+
+
+// 登录
+export const reqUserLogin = (userInfo) => {
+    return ajax({
+        url: '/user/passport/login',
+        method: 'post',
+        data: userInfo
+    })
+}
+
+// 获取用户登录信息     需要带着用户的token向服务器发送请求
+// /api/user/passport/auth/getUserInfo
+export const reqUserInfo = () => {
+    return ajax({
+        url: '/user/passport/auth/getUserInfo',
+        method: 'get'
+    })
+}
+
+// 退出登录
+export const reqLogout = () => {
+    return ajax({
+        url: '/user/passport/logout',
+        method: 'get'
+    })
+}
+
+// 获取用户地址信息
+// /user/userAddress/auth/findUserAddressList
+export const reqAddressInfo = () => {
+    return ajax({
+        url: '/user/userAddress/auth/findUserAddressList',
+        method: 'get'
+    })
+}
+
+// 获取订单交易页信息
+// /order/auth/trade
+export const reqOrderInfo = () => {
+    return ajax({
+        url: '/order/auth/trade',
+        method: 'get'
     })
 }

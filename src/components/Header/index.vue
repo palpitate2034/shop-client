@@ -5,10 +5,16 @@
             <div class="container">
                 <div class="loginList">
                     <p>尚品汇欢迎您！</p>
-                    <p>
+                    <p v-if="!userName">
                         <span>请</span>
-                        <a href="###">登录</a>
-                        <a href="###" class="register">免费注册</a>
+                        <!-- <a href="###">登录</a> -->
+                        <router-link to="/login">登录</router-link>
+                        <router-link class="register" to="/register">免费注册</router-link>
+                        <!-- <a href="###" class="register">免费注册</a> -->
+                    </p>
+                    <p v-else>
+                        <a>{{userName}}</a>
+                        <a class="register" @click="logout">退出登录</a>
                     </p>
                 </div>
                 <div class="typeList">
@@ -77,11 +83,30 @@ export default {
             // this.$router.push(location, () => { })
             // 方法2 catch处理错误的promise
             // console.log(this.$router.push(location).catch(() => { }))
+        },
+        // 退出登录
+        async logout() {
+            try {
+                // 发送请求，通知服务器退出登录，清除token
+                // 清除当前项目中的数据
+                await this.$store.dispatch('getLogout')
+                // 返回首页
+                this.$router.push('/')
+            } catch (error) {
+
+            }
+
         }
     },
     data() {
         return {
             keyword: ''
+        }
+    },
+    computed: {
+        // 用户名信息
+        userName() {
+            return this.$store.state.user.userInfo.name
         }
     },
     mounted() {

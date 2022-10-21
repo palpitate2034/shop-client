@@ -15,6 +15,22 @@ function getUserTempId() {
 
 
 
+function setToken(token) {
+    localStorage.setItem("TOKEN", token)
+}
+
+function getToken() {
+    return localStorage.getItem("TOKEN")
+}
+
+function removeToken() {
+    localStorage.removeItem("TOKEN")
+}
+
+
 export {
-    getUserTempId
+    getUserTempId,
+    setToken,
+    getToken,
+    removeToken
 }

@@ -5,6 +5,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
 
+import store from '@/store/index';
+
 // 安装vue插件
 Vue.use(VueRouter)
 
@@ -48,10 +50,7 @@ VueRouter.prototype.replace = function replace(location, onResolve, onReject) {
     })
 }
 
-
-
-// 向外暴露
-export default new VueRouter({
+let router = new VueRouter({
     // 模式
     mode: 'hash',  // history有问题
     // 应用中的所有路由
@@ -61,3 +60,49 @@ export default new VueRouter({
         return { x: 0, y: 0 }
     }
 })
+
+// 全局守卫:前置守卫
+router.beforeEach(async (to, from, next) => {
+    // console.log(to);
+    // to可以获取你要跳转到哪个路由
+    // console.log(from);
+    // from可以获取你从哪个路由跳转
+    // console.log(next);
+    // next()放行       next(path)放行到指定指令路由        next(false)
+    // next()
+    let token = store.state.user.token;
+    // 用户的信息
+    let name = store.state.user.userInfo.name
+    // 用户已经登录
+    if (token) {
+        // 用户已经登录还想去login[不能去，停在首页]
+        if (to.path === '/login') {
+            next('/')
+        } else {
+            // 登录了，去的不是login
+            if (name) {
+                next()
+            } else {
+                // 没有用户信息 派发action让仓库存储用户信息
+                try {
+                    // 获取用户信息成功
+                    await store.dispatch('getUserInfo')
+                    next()
+                } catch (error) {
+                    // token过期了
+                    // 清除token
+                    await store.dispatch('getLogout')
+                    next('/login')
+                }
+
+            }
+
+        }
+    } else {
+        next()
+    }
+})
+
+
+// 向外暴露
+export default router
